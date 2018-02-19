@@ -27,6 +27,7 @@ class AnswerController: UIViewController {
         questionContent.text = questionData[currentQuestion]
         if selected == correctA[currentQuestion] {
             congr.text = "You're Correct!                      ^ _ ^ Keep Going!"
+            correctPoints += 1
         }else {
             congr.text = "Got it wrong.. :("
         }
@@ -47,13 +48,32 @@ class AnswerController: UIViewController {
     func goHome(){
         performSegue(withIdentifier: "backHome", sender: self)
         currentQuestion = 0 // reload new question
+        correctPoints = 0 // reload correct points
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedLeft(_:)))
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(swipeLeft)
         
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedRight(_:)))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(swipeRight)
         // Do any additional setup after loading the view.
         showAnswer()
+    }
+    
+    @objc func swipedLeft(_ gesture: UIGestureRecognizer) {
+        if(currentQuestion != questionData.count){
+            performSegue(withIdentifier: "nextQuestion", sender: self)
+        }else {
+            performSegue(withIdentifier: "finishQuiz", sender: self)
+        }
+    }
+    
+    @objc func swipedRight(_ gesture: UIGestureRecognizer) {
+        backHome((Any).self)
     }
     
     override func didReceiveMemoryWarning() {

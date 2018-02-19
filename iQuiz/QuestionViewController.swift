@@ -9,9 +9,9 @@
 import UIKit
 
 //global variables
-var correctPoints = 0
 var questionData : [String] = []
 var currentQuestion = 0
+var correctPoints = 0
 
 // prepare for answer screen
 var selected = ""
@@ -44,6 +44,7 @@ class QuestionViewController: UIViewController {
     func goHome(){
         performSegue(withIdentifier: "backHome", sender: self)
         currentQuestion = 0 // reload new question
+        correctPoints = 0 // reload correct points
     }
     
     @IBAction func answerPressed(_ sender: UIButton) {
@@ -56,10 +57,16 @@ class QuestionViewController: UIViewController {
     
     
     @IBAction func submitAnswer(_ sender: Any) {
-        performSegue(withIdentifier: "checkAnswer", sender: self)
-    }
-    
+        if selected != ""{
+            performSegue(withIdentifier: "checkAnswer", sender: self)
+        }else {
+            let alertController = UIAlertController(title: "Sorry...", message: "But you must select an answer to continue.", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(defaultAction)
 
+            present(alertController, animated: true, completion: nil)
+        }
+    }
     
     func newQuestion(){
         switch(myIndex) {
