@@ -24,6 +24,7 @@ class AppData: NSObject {
         ["0", "1", "2", "3"],
         ["2", "4", "6", "8"]
     ]
+    open var correctMA = ["2", "2"]
     
     open var shieldQuestions = [
         "1. When was Iron Man released?",
@@ -33,6 +34,7 @@ class AppData: NSObject {
         ["2005", "2007", "2008", "2010"],
         ["3", "5", "4", "6"]
     ]
+    open var correctShieldA = ["2008", "4"]
     
     open var scienceQuestions = [
         "1. What is chemical formula for water?"
@@ -40,6 +42,7 @@ class AppData: NSObject {
     open var scienceAnswers = [
         ["HO2", "H2O", "HO", "HHHHHHHHH"]
     ]
+    open var correctSA = ["H2O"]
     
     func getQuizzes() -> [String] {
         return categories

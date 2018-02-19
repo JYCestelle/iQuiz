@@ -9,21 +9,19 @@
 import UIKit
 
 //global variables
-var points = 0
+var correctPoints = 0
 var questionData : [String] = []
 var currentQuestion = 0
 
+// prepare for answer screen
+var selected = ""
+var correctA : [String] = []
+
 class QuestionViewController: UIViewController {
     var appdata = AppData.shared
-//    var correctAns = 0
-//    var rightAnswerPlacement:UInt32 = 0
-    
-    var rightAnswerPlacement:UInt32 = 0
-    var beforeTag = -1
-    var currentTag = -1
-    var currentButton:UIButton = UIButton()
     var answers : [[String]] = []
-
+   
+    @IBOutlet weak var questionTitle: UILabel!
     @IBOutlet weak var questionlb: UILabel!
     @IBOutlet weak var ans1: UIButton!
     @IBOutlet weak var ans2: UIButton!
@@ -31,6 +29,7 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var ans4: UIButton!
     @IBOutlet weak var submit: UIButton!
     var answerButton: [UIButton] = [UIButton]()
+    //let answerButton = [ans1, ans2, ans3, ans4]
     
     @IBAction func backHome(_ sender: Any) {
         let alertController = UIAlertController(title: "Hiii", message: "Are you sure that you want to quit?", preferredStyle: .alert)
@@ -42,19 +41,17 @@ class QuestionViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func answerPressed(_ sender: Any) {
-        if beforeTag == -1 {
-            beforeTag = 0
-            currentButton = sender as! UIButton
-            currentButton.isSelected = true
-        } else {
-            currentButton.isSelected = false
-            currentButton = sender as! UIButton
-            currentButton.isSelected = true
-        }
-        currentTag = (sender as AnyObject).tag
-        print(currentTag)
-        submit.isEnabled = true
+    func goHome(){
+        performSegue(withIdentifier: "backHome", sender: self)
+        currentQuestion = 0 // reload new question
+    }
+    
+    @IBAction func answerPressed(_ sender: UIButton) {
+        answerButton.forEach{
+            btn in btn.setTitleColor(.black, for: .normal)}
+        sender.setTitleColor(UIColor(red: 44/255, green: 132/255, blue: 175/255, alpha: 1), for: .normal)
+        // store selected answer to the golabl variable
+        selected = (sender.titleLabel?.text)!
     }
     
     
@@ -62,38 +59,59 @@ class QuestionViewController: UIViewController {
         performSegue(withIdentifier: "checkAnswer", sender: self)
     }
     
-    func goHome(){
-        performSegue(withIdentifier: "backHome", sender: self)
-    }
+
     
     func newQuestion(){
         switch(myIndex) {
         case 0 :
             questionData = appdata.mathQuestions
             answers = appdata.mathAnswers
+            correctA = appdata.correctMA
+            questionTitle.text = appdata.categories[0]
         case 1 :
             questionData = appdata.shieldQuestions
             answers = appdata.shieldAnswers
+            correctA = appdata.correctShieldA
+            questionTitle.text = appdata.categories[1]
         default:
             questionData = appdata.scienceQuestions
             answers = appdata.scienceAnswers
+            correctA = appdata.correctSA
+            questionTitle.text = appdata.categories[2]
         }
-    
+
         questionlb.text = questionData[currentQuestion] //switch question --> change lable
         
         // set title for each button
         for i in 0...3{
             answerButton[i].setTitle(answers[currentQuestion][i], for: .normal)
         }
-        currentQuestion += 1
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.answerButton = [self.ans1, self.ans2, self.ans3, self.ans4]
         newQuestion()
+        
+        // add new gestures
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedLeft(_:)))
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedRight(_:)))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(swipeRight)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    @objc func swipedLeft(_ gesture: UIGestureRecognizer) {
+        performSegue(withIdentifier: "checkAnswer", sender: self)
+    }
+    
+    @objc func swipedRight(_ gesture: UIGestureRecognizer) {
+        backHome((Any).self)
+    }
+    
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C224D316203941660056643F /* AnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C224D315203941660056643F /* AnswerController.swift */; };
+		C28A98D5203A4E4300067EE3 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28A98D4203A4E4300067EE3 /* FinishViewController.swift */; };
 		C2A4CCA62031954F00E49701 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4CCA52031954F00E49701 /* AppDelegate.swift */; };
 		C2A4CCA82031954F00E49701 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4CCA72031954F00E49701 /* ViewController.swift */; };
 		C2A4CCAB2031954F00E49701 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2A4CCA92031954F00E49701 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		C224D315203941660056643F /* AnswerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerController.swift; sourceTree = "<group>"; };
+		C28A98D4203A4E4300067EE3 /* FinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
 		C2A4CCA22031954F00E49701 /* iQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2A4CCA52031954F00E49701 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2A4CCA72031954F00E49701 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				C2A4CCA92031954F00E49701 /* Main.storyboard */,
 				C2A4CCE7203929B900E49701 /* QuestionViewController.swift */,
 				C224D315203941660056643F /* AnswerController.swift */,
+				C28A98D4203A4E4300067EE3 /* FinishViewController.swift */,
 				C2A4CCD72032335A00E49701 /* AppData.swift */,
 				C2A4CCAC2031954F00E49701 /* Assets.xcassets */,
 				C2A4CCAE2031955000E49701 /* LaunchScreen.storyboard */,
@@ -274,6 +277,7 @@
 				C2A4CCD620322B0400E49701 /* TableViewCell.swift in Sources */,
 				C2A4CCE8203929B900E49701 /* QuestionViewController.swift in Sources */,
 				C2A4CCA82031954F00E49701 /* ViewController.swift in Sources */,
+				C28A98D5203A4E4300067EE3 /* FinishViewController.swift in Sources */,
 				C224D316203941660056643F /* AnswerController.swift in Sources */,
 				C2A4CCA62031954F00E49701 /* AppDelegate.swift in Sources */,
 				C2A4CCD82032335A00E49701 /* AppData.swift in Sources */,
