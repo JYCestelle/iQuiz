@@ -11,9 +11,11 @@ import UIKit
 class AppData: NSObject {
     static let shared = AppData()
     
-    open var categories : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
-    open var descriptions : [String] = ["Know your barrier!", "Our loved Marvel super heros!", "how much do you know about science?"]
-    open var images : [String] = ["math", "superhero", "science"]
+//    open var categories : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
+    open var categories : [String] = []
+//    open var descriptions : [String] = ["Know your barrier!", "Our loved Marvel super heros!", "how much do you know about science?"]
+    open var descriptions : [String] = []
+    open var images : [String] = ["science", "superhero", "math"]
     
     // questions for three categories
 //    open var mathQuestions = [
@@ -61,5 +63,19 @@ class AppData: NSObject {
     
     func getQuizzes() -> [String] {
         return categories
+    }
+    
+    func clear() {
+        self.categories = []
+        self.descriptions = []
+        self.mathQuestions = []
+        self.mathAnswers = []
+        self.correctMA = []
+        self.shieldQuestions = []
+        self.shieldAnswers = []
+        self.correctShieldA = []
+        self.scienceQuestions = []
+        self.scienceAnswers = []
+        self.correctSA = []
     }
 }

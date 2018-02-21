@@ -16,9 +16,9 @@ var correctPoints = 0
 // prepare for answer screen
 var selected = ""
 var correctA : [String] = []
-
+var appdata = AppData.shared
 class QuestionViewController: UIViewController {
-    var appdata = AppData.shared
+
     var answers : [[String]] = []
    
     @IBOutlet weak var questionTitle: UILabel!

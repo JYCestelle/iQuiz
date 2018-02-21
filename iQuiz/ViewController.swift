@@ -37,12 +37,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TableViewCell
-        
+        print(indexPath.row)
         let topic = appdata.categories[indexPath.row]
         let descrption = appdata.descriptions[indexPath.row]
+        let image = appdata.images[indexPath.row]
         cell.title.text = topic
         cell.desc.text = descrption
-        cell.images.image = UIImage(named: appdata.images[indexPath.row])
+        cell.images.image = UIImage(named: image)
+        
         NSLog(appdata.categories[indexPath.row])
         return cell
     }
@@ -56,6 +58,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        getQuizData(defaultUrl)
         
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
 //        self.refreshControl.addTarget(self, action: #selector(ViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
@@ -87,6 +90,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     } else {
                         let json = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [Dictionary<String, AnyObject>]
                         UserDefaults.standard.setValue(json, forKey: "jsonData")
+                        self.parseQuizData()
                         //UIApplication.shared.quizQuestionRepository.deserializaData()
                     }
                 }
@@ -104,30 +108,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let json = jsonData as! [Dictionary<String, AnyObject>]
             //var idx = 0
             for item in json {
-                self.appdata.categories.append(item["titles"]as! String);
+                self.appdata.categories.append(item["title"]as! String);
                 self.appdata.descriptions.append(item["desc"]as! String);
-                
                 let questionsData = (item["questions"] as! NSArray) as Array
                 for questionData in questionsData {
                     var question = questionData as! Dictionary<String, Any>
-                    let integer = Int(question["answer"] as! String)!
+                    let integer = Int(question["answer"] as! String)! - 1
                     var answerArray = question["answers"]as! [String]
                     let string = answerArray[integer]
-                    if item["titles"]as! String == "Science" {
+                    if item["title"]as! String == "Science!" {
                         self.appdata.mathQuestions.append(question["text"] as! String)
                         self.appdata.mathAnswers.append(question["answers"]as! [String])
 
                         self.appdata.correctMA.append(string)
-                    }else if item["titles"]as! String == "Marvel Super Heroes"{
+                    }else if item["title"]as! String == "Marvel Super Heroes"{
                         self.appdata.shieldQuestions.append(question["text"] as! String)
                         self.appdata.shieldAnswers.append(question["answers"]as! [String])
                         self.appdata.correctShieldA.append(string)
                     }else{
-                        self.appdata.shieldQuestions.append(question["text"] as! String)
-                        self.appdata.shieldAnswers.append(question["answers"]as! [String])
-                        self.appdata.correctShieldA.append(string)
+                        self.appdata.scienceQuestions.append(question["text"] as! String)
+                        self.appdata.scienceAnswers.append(question["answers"]as! [String])
+                        self.appdata.correctSA.append(string)
                     }
                 }
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }

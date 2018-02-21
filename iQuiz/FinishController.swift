@@ -9,7 +9,7 @@
 import UIKit
 
 class FinishController: UIViewController {
-    //var appdata = AppData.shared
+    var appdata = AppData.shared
     @IBOutlet weak var finalWord: UILabel!
     @IBOutlet weak var finalScore: UILabel!
     @IBOutlet weak var finalImage: UIImageView!
@@ -36,6 +36,7 @@ class FinishController: UIViewController {
         performSegue(withIdentifier: "backHome", sender: self)
         currentQuestion = 0 // reload new question
         correctPoints = 0 // reload correct points
+        appdata.clear()
     }
     
     override func viewDidLoad() {
