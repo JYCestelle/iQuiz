@@ -11,19 +11,29 @@ import UIKit
 var myIndex = 0
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var appdata = AppData.shared
-    var defaultUrl: String = "https://tednewardsandbox.site44.com/questions.json"
+    var dataUrl: String = "https://tednewardsandbox.site44.com/questions.json"
     var refreshControl = UIRefreshControl()
     
     var timer: Timer!
-    var interval = 30 // in sec
+    var interval = 20 // in sec
 
     
     @IBOutlet weak var tableView: UITableView!
     @IBAction func settingBtn(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        
-        alertController.addAction(defaultAction)
+        let alertController = UIAlertController(title: "Settings", message: "Enter an url to fetch other quizzes", preferredStyle: .alert)
+
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Url for fetching data"
+            textField.text = UserDefaults.standard.string(forKey: "dataUrl")
+        }
+
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Check it", style: .default, handler: {
+            alert -> Void in
+            let input = alertController.textFields![0].text!
+            UserDefaults.standard.set(input, forKey: "data_url")
+            self.getQuizData(input)
+        }))
         present(alertController, animated: true, completion: nil)
     }
     
@@ -40,12 +50,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print(indexPath.row)
         let topic = appdata.categories[indexPath.row]
         let descrption = appdata.descriptions[indexPath.row]
+        print(indexPath.row)
         let image = appdata.images[indexPath.row]
         cell.title.text = topic
         cell.desc.text = descrption
         cell.images.image = UIImage(named: image)
-        
-        NSLog(appdata.categories[indexPath.row])
+
         return cell
     }
     
@@ -56,22 +66,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(ViewController.refreshHandler(_:)), for: UIControlEvents.valueChanged)
+        self.tableView.addSubview(refreshControl)
+        
+        getQuizData(dataUrl)
         tableView.dataSource = self
         tableView.delegate = self
-        getQuizData(defaultUrl)
-        
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-//        self.refreshControl.addTarget(self, action: #selector(ViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
-//        self.categoryTableView.addSubview(refreshControl)
-//
-//        fetchData(defaultUrl)
-//        categoryTableView.dataSource = self
-//        categoryTableView.delegate = self
 //        if timer != nil {
 //            timer.invalidate()
 //        }
-//        startTimer()
     // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    @objc func refreshHandler(_ refreshControl: UIRefreshControl) {
+        appdata.clear()
+        getQuizData(dataUrl)
     }
     
     func getQuizData(_ url: String ) {
@@ -79,7 +89,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if url != nil {
             URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 if error != nil {
-                    let alertController = UIAlertController(title: "Error", message: "Fetching quiz data error. Using locally stored quiz data.", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Error", message: "There is an error for fetching data. Using locally stored quiz data.", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(alertController, animated: true, completion: nil)
                 } else { // fetch online data if possible
@@ -142,7 +152,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

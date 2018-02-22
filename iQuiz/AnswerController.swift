@@ -49,6 +49,7 @@ class AnswerController: UIViewController {
         performSegue(withIdentifier: "backHome", sender: self)
         currentQuestion = 0 // reload new question
         correctPoints = 0 // reload correct points
+        appdata.clear()
     }
     
     override func viewDidLoad() {
