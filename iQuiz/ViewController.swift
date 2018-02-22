@@ -69,20 +69,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: #selector(ViewController.refreshHandler(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(refreshControl)
-        
-        getQuizData(dataUrl)
         tableView.dataSource = self
         tableView.delegate = self
-//        if timer != nil {
-//            timer.invalidate()
-//        }
     // Do any additional setup after loading the view, typically from a nib.
     }
-    
+        
+        override func viewDidAppear(_ animated: Bool) {
+            if(Reachability.isConnectedToNetwork()){
+                getQuizData(dataUrl)
+            }else{
+                let alert = UIAlertController(title: "Network Unavailable", message: "use local data if available", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated:true, completion: nil)
+                do {
+                    parseQuizData()
+                }
+            }
+        }
+        
     @objc func refreshHandler(_ refreshControl: UIRefreshControl) {
         appdata.clear()
         getQuizData(dataUrl)
     }
+    
+
     
     func getQuizData(_ url: String ) {
         let url = URL(string: url)

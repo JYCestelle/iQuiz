@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2214DD3203EA6FF0074C577 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2214DD2203EA6FF0074C577 /* Reachability.swift */; };
 		C224D316203941660056643F /* AnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C224D315203941660056643F /* AnswerController.swift */; };
 		C28A98D5203A4E4300067EE3 /* FinishController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28A98D4203A4E4300067EE3 /* FinishController.swift */; };
 		C2A4CCA62031954F00E49701 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4CCA52031954F00E49701 /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C2214DD2203EA6FF0074C577 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C224D315203941660056643F /* AnswerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerController.swift; sourceTree = "<group>"; };
 		C28A98D4203A4E4300067EE3 /* FinishController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishController.swift; sourceTree = "<group>"; };
 		C2A4CCA22031954F00E49701 /* iQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +111,7 @@
 			children = (
 				C2A4CCA52031954F00E49701 /* AppDelegate.swift */,
 				C2A4CCA72031954F00E49701 /* ViewController.swift */,
+				C2214DD2203EA6FF0074C577 /* Reachability.swift */,
 				C2A4CCD520322B0400E49701 /* TableViewCell.swift */,
 				C2A4CCA92031954F00E49701 /* Main.storyboard */,
 				C2A4CCE7203929B900E49701 /* QuestionViewController.swift */,
@@ -280,6 +283,7 @@
 				C28A98D5203A4E4300067EE3 /* FinishController.swift in Sources */,
 				C224D316203941660056643F /* AnswerController.swift in Sources */,
 				C2A4CCA62031954F00E49701 /* AppDelegate.swift in Sources */,
+				C2214DD3203EA6FF0074C577 /* Reachability.swift in Sources */,
 				C2A4CCD82032335A00E49701 /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
